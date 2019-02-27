@@ -1,7 +1,7 @@
 package Problem_2108;
 
 
-
+//구글링 한 코드 무슨 차이가 있는지 모르겠다..
 /*import java.util.*;
 import java.util.Arrays;
 
@@ -67,6 +67,7 @@ public class Main {
 import java.util.Scanner;
 import java.util.Arrays;
 
+//내코드...실행은 되는데 시간초과 남 ㅠㅠ...
 public class Main {
 
 	public static void main(String[] args) {
