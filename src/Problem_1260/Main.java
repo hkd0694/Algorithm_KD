@@ -52,6 +52,7 @@ public class Main {
 			System.out.print(queue.peek() + " ");
 			queue.poll();
 		}
+		
 	}
 
 	public static void main(String[] args) {
@@ -76,5 +77,7 @@ public class Main {
 		DFS(arr,start);
 		System.out.println();
 		BFS(arr1,start);
+		
+		scanner.close();
 	}
 }
