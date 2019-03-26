@@ -14,6 +14,7 @@ public class Main {
 		String order = null;
 		for(int i=0;i<=test; i++) {
 			order = scanner.nextLine();
+			System.out.println(order);
 			if(order.startsWith("push")) {
 				top++;
 				String[] a = order.split(" ");
