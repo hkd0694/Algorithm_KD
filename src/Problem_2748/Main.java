@@ -29,6 +29,5 @@ public class Main {
 				System.out.println(F0+F1);
 			}
 		}
-
 	}
 }
