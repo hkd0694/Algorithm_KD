@@ -1,52 +1,54 @@
 package Problem_10828;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Stack;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		Scanner scanner = new Scanner(System.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int test = scanner.nextInt();
-		int []stack = new int[test];
-		int top = -1;
-		String order = null;
-		for(int i=0;i<=test; i++) {
-			order = scanner.nextLine();
-			System.out.println(order);
-			if(order.startsWith("push")) {
-				top++;
+		int test = Integer.parseInt(br.readLine());
+		Stack<Integer> stack = new Stack<Integer>();
+		
+		for(int i=0;i<test;i++) {
+			String order = br.readLine();
+			
+			switch(order) {
+			case "size":
+				bw.write(String.valueOf(stack.size()));
+				bw.newLine();
+				break;
+			case "empty":
+				if(stack.isEmpty()) bw.write("1");
+				else bw.write("0");
+				bw.newLine();
+				break;
+			case "pop":
+				if(stack.isEmpty()) bw.write("-1");
+				else bw.write(String.valueOf(stack.pop()));
+				bw.newLine();
+				break;
+			case "top":
+				if(stack.isEmpty()) bw.write("-1");
+				else bw.write(String.valueOf(stack.peek()));
+				bw.newLine();
+				break;
+			default:
 				String[] a = order.split(" ");
-				stack[top] = Integer.parseInt(a[1]);
-			} 
-			else if(order.equals("pop")) {
-				if(top == -1) {
-					System.out.println(-1);
-				} else {
-					System.out.println(stack[top]);
-					stack[top] = 0;
-					top--;
-				}
+				stack.push(Integer.parseInt(a[1]));
+				break;
 			}
-			else if(order.equals("top")) {
-				if(top != -1) {
-					System.out.println(stack[top]);
-				} else {
-					System.out.println(-1);
-				}
-			} 
-			else if(order.equals("size")) {
-				System.out.println(top+1);
-			} 
-			else if(order.equals("empty")) {
-				if(top == -1) {
-					System.out.println(1);
-				} else {
-					System.out.println(0);
-				}
-			}
+			
 		}
+		bw.flush();
+		bw.close();
 	}
 
 }
