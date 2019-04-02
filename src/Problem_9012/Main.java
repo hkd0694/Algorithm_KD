@@ -1,54 +1,44 @@
 package Problem_9012;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Stack;
 
 public class Main {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws NumberFormatException, IOException{
 		
-		Scanner scanner = new Scanner(System.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int test = scanner.nextInt();
-		char stack[] = new char[50];
-		int size = -1;
+		int test = Integer.parseInt(br.readLine());
 		
-		for(int i=0;i<test; i++) {
-			String b = scanner.next();
-			size = -1;
-			if(b.length() >=2 && b.length() <=50) {
-				
-				for(int j=0;j<b.length();j++) {
-					if(b.charAt(j) == ')') {
-						while(size != -1) {
-							if(stack[size] == '(') {
-								break;
-							} else {
-								size--;
-							}
-						}
-						if(size !=-1) {
-							size--;
-						} else {
-							stack[0] = 'c';
-							break;
-						}
-						
-					} else {
-						size++;
-						stack[size] = b.charAt(j);
-					}
+		Stack<String> stack = new Stack<String>();
+
+		for(int i=0;i<test;i++) {
+			String order = br.readLine();
+			int j = 0;
+			for(;j<order.length();j++) {
+				if(order.charAt(j) =='(') {
+					stack.push(String.valueOf(order.charAt(j)));
+					continue;
+				} else if(order.charAt(j) == ')') {
+					if(stack.isEmpty()) break;
+					else stack.pop();
 				}
-				
-				if(stack[0] == 'c' || size != -1) {
-					System.out.println("NO");
-				} else {
-					System.out.println("YES");
-				}
-				
 			}
-
-			
+			if(j != order.length()) bw.write("NO\n");
+			else {
+				if(!stack.isEmpty()) bw.write("NO\n");
+				else bw.write("YES\n");
+			}	
+			stack.clear();	
 		}
+		bw.flush();
+		bw.close();
+		br.close();
 	}
-
 }
