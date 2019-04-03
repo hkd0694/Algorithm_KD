@@ -6,112 +6,92 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Stack;
-import java.util.StringTokenizer;
 
 public class Main {
-
-    static StringTokenizer st;
+	
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        st = new StringTokenizer(br.readLine());
-        String bracket = st.nextToken();
-        Stack<String> stack = new Stack<>();
-        int roundBracket = 0;
-        int squareBracket = 0;
-        
-        for(int i=0; i<bracket.length(); i++) {
-            
-            switch (bracket.charAt(i)) {
-            
-            case '(':
-                roundBracket++;
-                stack.push("(");
-                break;    
-            case ')':
-                roundBracket--;
-                if(roundBracket > -1) {
-                    
-                    if(stack.peek().equals("(")) {
-                        stack.pop();
-                        stack.push("2");
-                    }else {
-                        int roundResult = 0;
-                        
-                        while(!stack.isEmpty()) {
-                            
-                            if(stack.peek().equals("[")) {
-                                bw.write("0");
-                                bw.flush();
-                                return;
-                            }else if(stack.peek().equals("(")) {
-                                stack.pop();
-                                roundResult *=2;
-                                stack.push(String.valueOf(roundResult));
-                                break;
-                            }else {
-                                roundResult += Integer.parseInt(stack.pop());
-                            }
-                            
-                        }
-                    }
-                }
-                break;
-            case '[':
-                squareBracket++;
-                stack.push("[");
-                break;
-            case ']':
-                squareBracket--;
-                
-                if(squareBracket > -1) {
-                    if(stack.peek().equals("[")) {
-                        stack.pop();
-                        stack.push("3");
-                    }else {
-                        int squareResult = 0;
-                        
-                        while(!stack.isEmpty()) {
-                            
-                            if(stack.peek().equals("(")) {
-                                bw.write("0");
-                                bw.flush();
-                                return;
-                            }else if(stack.peek().equals("[")) {
-                                stack.pop();
-                                squareResult *=3;
-                                stack.push(String.valueOf(squareResult));
-                                break;
-                            }else {
-                                squareResult += Integer.parseInt(stack.pop());
-                            }
-                        }
-                    }
-                }
-                break;
-            }
-            
-            if(squareBracket < 0 || roundBracket < 0) {
-                bw.write("0");
-                bw.flush();
-                return;
-            }
-        }
-        
-        if(squareBracket != 0 || roundBracket != 0) {
-            bw.write("0");
-            bw.flush();
-            return;
-        }
-        
-        int output = 0;
-        
-        while(!stack.isEmpty()) {
-            output += Integer.parseInt(stack.pop());
-        }
-        
-        bw.write(String.valueOf(output));
+    	String order = br.readLine();
+    	Stack<String> stack = new Stack<String>();
+    	int Result = 0;
+    	int i=0;
+    	for(;i<order.length();i++) {
+    		Result = 0;
+    		if(order.charAt(i) == '(' || order.charAt(i) == '[') {
+    			stack.push(String.valueOf(order.charAt(i)));
+    			continue;
+    		} 
+    		else if(order.charAt(i) == ')') {
+    			if(stack.isEmpty()) break;
+    			String RoundOut = stack.peek();
+    			if(RoundOut.equals("[")) break;
+    			else if(RoundOut.equals("(")) {
+    				stack.pop();
+    				stack.push("2");
+    			}
+    			else {
+    				while(!RoundOut.equals("(")) {
+    					if(RoundOut.equals("[")) {
+    						bw.write("0"); bw.flush();
+    						bw.close(); return;
+    					}
+    					Result += Integer.parseInt(stack.pop());
+    					if(stack.isEmpty()) {
+    						bw.write("0"); bw.flush();
+    						bw.close(); return;
+    					}
+    					RoundOut = stack.peek();
+    				}
+    				stack.pop();
+    				Result *=2;
+    				stack.push(String.valueOf(Result));
+    			}
+    		} 
+    		else if(order.charAt(i) == ']') {
+    			if(stack.isEmpty()) break;
+    			String SqareOut = stack.peek();
+    			if(SqareOut.equals("(")) break;
+    			else if(SqareOut.equals("[")) {
+    				stack.pop();
+    				stack.push("3");
+    			}
+    			else {
+    				while(!SqareOut.equals("[")) {
+    					if(SqareOut.equals("(")) {
+    						bw.write("0"); bw.flush();
+    						bw.close(); return;
+    					}
+    					Result += Integer.parseInt(stack.pop());
+    					if(stack.isEmpty()) {
+    						bw.write("0"); bw.flush(); 
+    						bw.close(); return;
+    					}
+    					SqareOut = stack.peek();
+    				}
+    				stack.pop();
+    				Result *=3;
+    				stack.push(String.valueOf(Result));
+    			}
+    		}
+    	}
+    	
+    	Result = 0;
+    	
+    	if(i != order.length()) bw.write("0");
+    	else {
+    		while(!stack.isEmpty()) {
+    			if(stack.peek().equals("[") || stack.peek().equals("(")) {
+    				bw.write("0"); bw.flush();
+    				bw.close(); return;
+    			} else {
+    				Result += Integer.parseInt(stack.pop());
+    			}
+    		}
+    		bw.write(String.valueOf(Result));
+    	}
         bw.flush();
+        bw.close();
     }
- 
 }
