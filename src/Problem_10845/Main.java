@@ -1,51 +1,96 @@
 package Problem_10845;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
+	
+	private static int front = -1;
+	private static int rear = -1;
+	
+	private static int QueueSize(int[] array) {
+		if(front == -1) return 0;
+		else{
+			return rear-front+1;
+		}
+	}
+	
+	private static int QueueFront(int[] array) {
+		if(front > rear || front == -1) return -1;
+		else {
+			return array[front];
+		}
+	}
+	
+	private static int QueueBack(int[] array) {
+		if(front > rear || front == -1) return -1;
+		else {
+			return array[rear];
+		}
+	}
+	
+	private static int QueueEmpty(int[] array) {
+		if(front > rear || front == -1) return 1;
+		else return 0;
+	}
+	
+	private static int QueuePop(int[] array) {
+		if(front > rear || front == -1) return -1;
+		else if(front == rear) {
+			int g = array[front];
+			front = -1; rear = -1;
+			return g;
+		}
+		else {
+			return array[front++];
+		}
+	}
+	
+	private static void QueuePush(int[] array , String order) {
+		String number[] = order.split(" ");
+		if(front == -1) {
+			front++; rear++;
+			array[rear] = Integer.parseInt(number[1]);			
+		} else {
+			rear++;
+			array[rear] = Integer.parseInt(number[1]);
+		}
+	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		Scanner scanner = new Scanner(System.in);
 		
-		int test = scanner.nextInt();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int test = Integer.parseInt(br.readLine());
+		
 		int array[] = new int[test];
-		int front = -1, rear = -1;
-		for(int i=0;i<=test; i++) {
-			String order = scanner.nextLine();			
-			if(order.startsWith("push")) {
-				String[] divide = order.split(" ");
-				if(front == -1) {
-					front++;
-					rear++;
-					array[front] = Integer.parseInt(divide[1]);
-				} else {
-					front++;
-					array[front] = Integer.parseInt(divide[1]);
-				}
-			} else if (order.equals("pop")) {
-				if(front == -1) System.out.println(-1);
-				else {
-					System.out.println(array[rear]);
-					rear++;
-					if(front < rear) {
-						front = -1;
-						rear = -1;
-					}
-				}
-			} else if (order.equals("front")) {
-				if(front == -1) System.out.println(-1);
-				else System.out.println(array[rear]);
-			} else if (order.equals("back")) {
-				if(front == -1) System.out.println(-1);
-				else System.out.println(array[front]);
-			} else if (order.equals("size")) {
-				if(front == -1 ) System.out.println(0);
-				else			 System.out.println(front-rear+1);
-			} else if(order.equals("empty")) {
-				if(front == -1) System.out.println(1);
-				else			  System.out.println(0);
+				
+		for(int i=0;i<test;i++) {
+			String order = br.readLine();
+			
+			switch(order) {
+			case "size":
+				System.out.println(QueueSize(array));
+				break;
+			case "front":
+				System.out.println(QueueFront(array));
+				break;
+			case "back":
+				System.out.println(QueueBack(array));
+				break;
+			case "empty":
+				System.out.println(QueueEmpty(array));
+				break;
+			case "pop":
+				System.out.println(QueuePop(array));
+				break;
+			default:
+				QueuePush(array,order);
+				break;
 			}
 		}
+		
 	}
 }
