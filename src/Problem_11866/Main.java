@@ -1,33 +1,44 @@
 package Problem_11866;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		Scanner scanner = new Scanner(System.in);
-		int N = scanner.nextInt();
-		int M = scanner.nextInt();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		Queue<Integer> queue = new LinkedList<>();
-		for(int i=1;i<=N;i++) {
-			queue.add(i);
-		}
+		
+		String num = br.readLine();
+		String[] d = num.split(" ");
+		
+		int N = Integer.parseInt(d[0]);
+		int K = Integer.parseInt(d[1]);
+		
+		for(int i=1;i<=N;i++) queue.add(i);
+		
 		int count = 0;
-		System.out.print("<");
+		bw.write("<");
 		while(queue.size() > 1) {
-			int q = queue.peek();
 			count++;
-			if(count % M == 0) {
-				System.out.print(queue.poll() + ", ");
-				continue;
-			} else {
-				queue.poll();
-				queue.add(q);
+			if(count % K == 0) {
+				bw.write(queue.poll() +", ");
+			}
+			 else {
+				int number = queue.poll();
+				queue.add(number);
 			}
 		}
-		System.out.print(queue.poll() + ">");
+		bw.write(queue.poll() + ">");
+		bw.flush();
+		bw.close();
+		br.close();
 	}
 }
