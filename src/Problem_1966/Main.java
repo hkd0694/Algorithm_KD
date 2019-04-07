@@ -1,49 +1,58 @@
 package Problem_1966;
 
-import java.util.Iterator;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
-
+import java.util.StringTokenizer;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		Scanner scanner = new Scanner(System.in);
-		int test = scanner.nextInt();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		int test = Integer.parseInt(br.readLine());
+		Queue<Integer> queue = new LinkedList<Integer>();
 		
 		for(int i=0;i<test;i++) {
-			int N = scanner.nextInt(); //문서의 수
-			int M = scanner.nextInt(); //queue의 어떤위치에 있는지를 알려주는 수
-			Queue<Integer> change = new LinkedList<>();
+			StringTokenizer index = new StringTokenizer(br.readLine());
+			int N = Integer.parseInt(index.nextToken());
+			int M = Integer.parseInt(index.nextToken());
+			
+			StringTokenizer number = new StringTokenizer(br.readLine());
+			int arrayCount[] = new int[N];
+			
 			for(int j=0;j<N;j++) {
-				int im = scanner.nextInt();
-				change.add(im);
+				arrayCount[j] = Integer.parseInt(number.nextToken());		
+				queue.add(j);
 			}
+			int result = arrayCount[M];
 			int count = 0;
-			while(true) {
-				int peek = change.peek();
-				boolean ok = true;
-				Iterator<Integer> a = change.iterator();
-				while(a.hasNext()) {
-					if(peek<a.next()) {
-						ok = false;
+			boolean check = true;
+			
+			 do {
+				int peek = queue.peek();
+				check = true;
+				for(int z = 0; z<arrayCount.length;z++) {
+					if(z == peek) continue;
+					
+					if(arrayCount[peek] < arrayCount[z]) {
+						queue.add(queue.poll());
+						check = false;
 						break;
 					}
 				}
-				if(ok == true) {
-					change.poll();
+				if(check == true) {
 					count++;
-					if(M == 0) break;
-				} else {
-					int head = change.poll();
-					change.add(head);
+					if(arrayCount[peek] == result && peek == M) break;
+					arrayCount[queue.poll()] = 0;
 				}
-				
-				M = (M-1>=0)? M-1:change.size()-1;
-			}
-			System.out.println(count);
+			 } while(true);
+			 System.out.println(count);
+			 queue.clear();
 		}
+		br.close();
 	}
 }
