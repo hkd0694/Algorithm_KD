@@ -31,5 +31,6 @@ public class Main {
 			for(int j=C-K;j>=1;j--) bun *=j;
 		}
 		System.out.println(result/bun);	  
+		br.close();
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Stack;
 
 public class Main {
 	
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -45,7 +46,6 @@ public class Main {
 				stack.push(Integer.parseInt(a[1]));
 				break;
 			}
-			
 		}
 		bw.flush();
 		bw.close();
