@@ -1,22 +1,22 @@
 package Problem_1260;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Main {
 	
-	public static void DFS(boolean arr[][],int start) {
-		
-		Stack<Integer> stack = new Stack<>();
-		stack.push(start);
-		
+	private static void DFS(boolean[][] dfs, int V) {
+		Stack<Integer> stack = new Stack<Integer>();
+		stack.push(V);
 		while(!stack.isEmpty()) {
-			int d = stack.pop();
-						
-			for(int i=arr.length;i>=1;i--) {
-				if(arr[d-1][i-1] == true) {
+			int peek = stack.pop();
+			for(int i=dfs.length;i>0;i--) {
+				if(dfs[peek-1][i-1] == true) {
 					if(stack.contains(i)) {
 						int re = stack.indexOf(i);
 						stack.remove(re);
@@ -25,59 +25,53 @@ public class Main {
 						stack.push(i);
 					}
 				}
-				arr[d-1][i-1] = false;
-				arr[i-1][d-1] = false;
+				dfs[peek-1][i-1] = false;
+				dfs[i-1][peek-1] = false;
 			}
-			System.out.print(d + " ");
+			System.out.print(peek + " ");
 		}
 	}
 	
-	public static void BFS(boolean arr[][],int start) {
-		
-		Queue<Integer> queue = new LinkedList<>();
-		
-		queue.add(start);
-		
+	private static void BFS(boolean[][] bfs, int V) {
+		Queue<Integer> queue = new LinkedList<Integer>();
+		queue.add(V);
 		while(!queue.isEmpty()) {
-			for(int i=1;i<=arr.length;i++) {
-				if(arr[queue.peek()-1][i-1] == true) {
-					arr[queue.peek()-1][i-1] = false;
-					arr[i-1][queue.peek()-1] = false;
-					if(queue.contains(i)) {
-						continue;
-					}
-					queue.add(i);
+			int q = queue.peek();
+			for(int i=0;i<bfs.length;i++) {
+				if(bfs[q-1][i] == true) {
+					if(!queue.contains(i+1)) queue.add(i+1);
+					bfs[q-1][i] = false;
+					bfs[i][q-1] = false;
 				}
 			}
-			System.out.print(queue.peek() + " ");
-			queue.poll();
+			System.out.print(queue.poll() + " ");
 		}
-		
 	}
+	
+	public static void main(String[] args) throws IOException {
 
-	public static void main(String[] args) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		Scanner scanner = new Scanner(System.in);
-		int V = scanner.nextInt();
-		int E = scanner.nextInt();
-		int start = scanner.nextInt();
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		int V = Integer.parseInt(st.nextToken());
 		
-		boolean arr[][] = new boolean[V][V];
-		boolean arr1[][] = new boolean[V][V];
+		boolean BFSArray[][] = new boolean[N][N];
+		boolean DFSArray[][] = new boolean[N][N];
 		
-		for(int i=0;i<E;i++) {
-			int EStart = scanner.nextInt();
-			int EEnd = scanner.nextInt();
-			arr[EStart-1][EEnd-1] = true;
-			arr[EEnd-1][EStart-1] = true;
-			arr1[EStart-1][EEnd-1] = true;
-			arr1[EEnd-1][EStart-1] = true;
+		for(int i=0;i<M;i++) {
+			StringTokenizer visit = new StringTokenizer(br.readLine());
+			int num1 = Integer.parseInt(visit.nextToken());
+			int num2 = Integer.parseInt(visit.nextToken());
+			BFSArray[num1-1][num2-1] = true;
+			BFSArray[num2-1][num1-1] = true;
+			DFSArray[num1-1][num2-1] = true;
+			DFSArray[num2-1][num1-1] = true;
 		}
-		
-		DFS(arr,start);
+		DFS(BFSArray,V);
 		System.out.println();
-		BFS(arr1,start);
-		
-		scanner.close();
+		BFS(DFSArray,V);
+		br.close();
 	}
 }
