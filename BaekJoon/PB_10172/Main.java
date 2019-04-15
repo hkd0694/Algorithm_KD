@@ -1,4 +1,4 @@
-package Problem_10172;
+package PB_10172;
 
 public class Main {
 
@@ -9,5 +9,4 @@ public class Main {
 		System.out.println("|\"^\"`    |");
 		System.out.println("||_/=\\\\__|");
 	}
-
 }
