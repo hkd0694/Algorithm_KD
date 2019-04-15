@@ -9,6 +9,5 @@ public class Main {
 		System.in.read();
 		int y = System.in.read()-'0';		
 		System.out.println(x+y);
-
 	}
 }
