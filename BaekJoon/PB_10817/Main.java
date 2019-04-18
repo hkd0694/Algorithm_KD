@@ -1,10 +1,10 @@
-package Problem_10817;
+package PB_10817;
 
 import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+public static void main(String[] args) {
 		
 		Scanner scanner = new Scanner(System.in);
 		int a, b, c;
