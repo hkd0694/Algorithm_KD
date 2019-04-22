@@ -11,11 +11,9 @@ public class Main {
 	
 	private static int priority(String operator) {
 		switch(operator) {
-		case "*":
-		case "/":
+		case "*": case "/":
 			return 1;
-		case "+":
-		case "-":
+		case "+": case "-":
 			return 2;
 		case "(":
 			return 3;
@@ -61,7 +59,6 @@ public class Main {
 				break;	
 			}
 		}
-		
 		while(!stack.isEmpty()) {
 			sb.append(stack.pop());
 		}
