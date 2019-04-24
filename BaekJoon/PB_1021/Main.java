@@ -1,24 +1,29 @@
-package Problem_1021;
+package PB_1021;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) throws IOException {
 		
-		Scanner scanner = new Scanner(System.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int number = Integer.parseInt(st.nextToken());
+		int test = Integer.parseInt(st.nextToken());
 		Deque<Integer> de = new ArrayDeque<>();
-		int number = scanner.nextInt();
-		int test = scanner.nextInt();
+		
 		for(int i=1;i<=number;i++) de.add(i);
-		
+
 		int count = 0;
-		
+		st = new StringTokenizer(br.readLine());
 		for(int j=0;j<test;j++) {
-			int index = scanner.nextInt();
+			int index = Integer.parseInt(st.nextToken());
 			Iterator<Integer> iterator = de.iterator();
 			int Fcount = 0;
 			while(iterator.hasNext()) {
