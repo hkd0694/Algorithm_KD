@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 
 public class Insertion_Sort {
 	
-	//선택 정렬로 정렬해주는 배열 
+	//삽입 정렬로 정렬해주는 배열 
 	//빅오표기법 
 	//best -> O(n) avg -> O(n2) worst -> O(n2) 
 	//sec -> 7.438
