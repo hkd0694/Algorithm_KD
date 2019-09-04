@@ -12,7 +12,9 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int test = Integer.parseInt(br.readLine());
+		//입력할 키와 몸무게 넣을 배열
 		int arr[][] = new int[test][2];
+		//각각의 등수를 저장할 배열/
 		int rank[] = new int[test];
 		StringTokenizer st;
 		
@@ -23,6 +25,7 @@ public class Main {
 			}
 		}
 		int i=0;
+		//처음 값부터 하나씪 모두 비교 (브루트포스)
 		while(i != test) {
 			int count = 1;
 			for(int j=0;j<test;j++) {

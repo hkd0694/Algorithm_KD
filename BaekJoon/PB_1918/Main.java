@@ -64,7 +64,6 @@ public class Main {
 		}
 		
 		bw.write(String.valueOf(sb));
-		
 		bw.flush();
 		bw.close();
 		br.close();

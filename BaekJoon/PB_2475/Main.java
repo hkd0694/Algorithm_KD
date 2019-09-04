@@ -19,9 +19,6 @@ public class Main {
 			int num = Integer.parseInt(st.nextToken());
 			sum += num * num;
 		}
-		
 		System.out.println(sum%10);
-
 	}
-
 }
